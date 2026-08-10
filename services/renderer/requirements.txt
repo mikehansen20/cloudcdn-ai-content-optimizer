@@ -1,0 +1,5 @@
+fastapi>=0.118,<1
+uvicorn[standard]>=0.38,<1
+# Match the base image's bundled browser build (v1.61.0); reuses the browsers
+# already at /ms-playwright (PLAYWRIGHT_BROWSERS_PATH); no download needed.
+playwright==1.61.0

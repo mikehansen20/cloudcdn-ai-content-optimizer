@@ -1,0 +1,59 @@
+# ------------------------------------------------------------------------------
+# REQUIRED BASIC CONFIGURATION
+# Copy to terraform.tfvars and fill in your values. Placeholders below are neutral
+# on purpose; replace them with your own project and site settings.
+# ------------------------------------------------------------------------------
+
+project_id = "YOUR_PROJECT_ID"
+
+# The Google Cloud region for regional backend resources: Cloud Run workers, GCS content bucket,
+# Cloud Scheduler, and Vertex AI default (e.g. "us-central1", "europe-west1", "asia-east1").
+# Tip: Choose a region close to your origin web server to minimize crawl latency.
+region        = "YOUR_REGION"
+site_base_url = "https://www.example.com"
+
+# Your EXISTING global external load balancer (the one serving the site above).
+# Filling these in populates your load balancer URL map, forwarding rule, and origin backend
+# service in the manual_step_1 and manual_step_2 outputs to make them copy-paste-ready.
+# The module never modifies any of these resources.
+existing_url_map                 = "your-url-map"                 # Name of your global HTTP(S) load balancer URL map
+existing_forwarding_rule         = "your-forwarding-rule"         # Name of your global forwarding rule
+existing_default_backend_service = "your-default-backend-service" # Name of your existing default backend service serving the origin site
+
+# Sitemap location. Leave unset to use {site_base_url}/sitemap.xml.
+# sitemap_url = "https://www.example.com/sitemap.xml"
+
+# Optimize your public content; skip private/transactional paths.
+include_paths = ["/*"]
+exclude_paths = ["/account/*", "/cart/*", "/checkout/*"]
+
+# The H1 heading at the top of the generated llms.txt: the name of your whole site.
+site_title = "Example Site"
+
+# ------------------------------------------------------------------------------
+# ADVANCED SETTINGS (Optional - Defaults are shown in comments below)
+# Only uncomment and adjust if you have specific performance or logging requirements.
+# ------------------------------------------------------------------------------
+
+# Edge CDN cache TTL in seconds (Default: 3600 = 1 hour)
+# Controls the serving-shim Cache-Control max-age and Cloud CDN default TTL.
+# cdn_default_ttl_seconds  = 3600
+
+# Client/browser cache TTL in seconds (Optional: overrides downstream client TTL)
+# client_ttl               = 3600
+
+# Cloud CDN request logging on the optimized backend service (Default: true)
+# enable_cdn_logging       = true
+
+# Sampling rate for Cloud CDN request logs (Default: 1.0 = 100% of requests)
+# cdn_log_sample_rate      = 1.0
+
+# Customize resource name prefix (Default: "ai-optimizer")
+# name_prefix              = "my-site-optimizer"
+
+# Cloud Run worker scaling (advanced concurrency & quota bounds)
+# Defaults: worker_min_instances = 1, worker_max_instances = 10, worker_concurrency = 16
+# worker_min_instances     = 1        # 1 keeps a warm worker ready 24/7 for zero-latency crawls; 0 for scale-to-zero.
+# worker_max_instances     = 10       # Max Cloud Run worker containers (Default: 10; set 35 for 50k+ enterprise catalogs)
+# worker_concurrency       = 16       # Concurrent jobs per worker instance (Default: 16; set 80 for 50k+ enterprise catalogs)
+

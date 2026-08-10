@@ -1,0 +1,34 @@
+# Local development setup: worker and renderer on a shared network.
+#
+#   docker compose -f services/docker-compose.yml up --build
+#   curl -X POST localhost:8080/process -H 'Content-Type: application/json' \
+#        -d '{"url":"https://example.com/"}'
+#
+# Output lands in services/_local_output/. MODEL=stub by default (fully offline);
+# for MODEL=vertex, uncomment the ADC lines and run with MODEL=vertex.
+services:
+  renderer:
+    build:
+      context: .
+      dockerfile: renderer/Dockerfile
+    image: aico-renderer
+
+  worker:
+    build:
+      context: .
+      dockerfile: worker/Dockerfile
+    image: aico-worker
+    ports:
+      - "8080:8080"
+    depends_on:
+      - renderer
+    environment:
+      RENDERER_URL: http://renderer:8080
+      MODEL: ${MODEL:-stub}
+      STORAGE_DIR: /data
+      GCP_PROJECT: ${GCP_PROJECT:-}   # required only for MODEL=vertex
+      # For MODEL=vertex, provide Application Default Credentials:
+      # GOOGLE_APPLICATION_CREDENTIALS: /adc.json
+    volumes:
+      - ./_local_output:/data
+      # - ~/.config/gcloud/application_default_credentials.json:/adc.json:ro

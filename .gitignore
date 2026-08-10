@@ -1,0 +1,47 @@
+# Local working files (not version-controlled)
+/internal_docs/
+/tasks/
+/.agents/
+/skills/
+/scale-test/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Rust (edge-plugin wasm)
+target/
+
+# Terraform (state is sensitive; lock file .terraform.lock.hcl IS tracked)
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+
+# Secrets / env / credentials
+.env
+.env.*
+*.pem
+*-key.json
+credentials.json
+
+# Local test data (not version-controlled)
+/fixtures/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Local compose output
+/services/_local_output/
+
+

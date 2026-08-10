@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cascade"
+version = "0.0.1"
+description = "AI Content Optimizer: offline extraction cascade"
+requires-python = ">=3.13"
+dependencies = [
+    "pydantic>=2",
+    "beautifulsoup4>=4",
+    "lxml>=5",
+    "pyyaml>=6",
+]
+
+[project.optional-dependencies]
+# Test runner. Until the package-registry auth is sorted, tests also run on the
+# stdlib: `PYTHONPATH=src python -m unittest discover -s tests`.
+dev = ["pytest>=8"]
+# Vertex model client (Google Gen AI SDK). Verified live 2026-06-30 with 2.10.0
+# against gemini-3.5-flash on Vertex. Customers install this from public PyPI.
+model = ["google-genai>=2.10,<3"]
+# Headless-Chromium render fallback for JS-shell pages. After install, fetch the
+# browser: `python -m playwright install chromium`. Verified live with 1.61.0.
+render = ["playwright>=1.61,<2"]
+
+[project.scripts]
+cascade = "cascade.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

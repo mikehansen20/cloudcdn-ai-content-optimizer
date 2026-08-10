@@ -1,0 +1,9 @@
+fastapi>=0.118,<1
+uvicorn[standard]>=0.38,<1
+pydantic>=2,<3
+beautifulsoup4>=4,<5
+lxml>=5,<7
+pyyaml>=6,<7
+google-genai>=2.10,<3
+google-cloud-storage>=3,<4
+google-cloud-pubsub>=2,<3

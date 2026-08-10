@@ -1,0 +1,4 @@
+fastapi>=0.118,<1
+uvicorn[standard]>=0.38,<1
+google-cloud-storage>=3,<4
+google-cloud-pubsub>=2,<3

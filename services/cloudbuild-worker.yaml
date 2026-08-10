@@ -1,0 +1,11 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-f'
+      - 'worker/Dockerfile'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/upperstack-tools/aico/aico-worker:latest'
+      - '.'
+images:
+  - 'us-central1-docker.pkg.dev/upperstack-tools/aico/aico-worker:latest'
